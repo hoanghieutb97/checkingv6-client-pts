@@ -43,10 +43,10 @@ function startPhotoshopStatusWatcher(socket) {
             }
 
             // Tránh xử lý nội dung trùng lặp
-            if (lastProcessedContent === data) {
-                console.log("Nội dung không thay đổi, bỏ qua");
-                return;
-            }
+            // if (lastProcessedContent === data) {
+            //     console.log("Nội dung không thay đổi, bỏ qua");
+            //     return;
+            // }
             lastProcessedContent = data;
 
             console.log('Nội dung của file:', data);
@@ -111,7 +111,7 @@ let watcherCleanup = null;
 // Connection events
 socket.on('connect', () => {
     reconnectAttempts = 0;  // Reset số lần thử kết nối khi kết nối thành công
-    console.log('Connected to server');
+    console.log('Connected to server',socket.id);
 
     // Báo cho server biết client đã sẵn sàng
     socket.emit('awaitReady');
