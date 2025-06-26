@@ -41,7 +41,7 @@ async function method_PTSrun(dataJSON) {
 }
 
 async function check_AwaitPhotoshop() {
-    console.log("chay checkAwait script=======================================");
+    console.log("checkAwait=======================================");
     return new Promise((resolve, reject) => {
         try {
             const photoshopPath = 'C:\\Program Files\\Adobe\\Adobe Photoshop 2020\\Photoshop.exe';

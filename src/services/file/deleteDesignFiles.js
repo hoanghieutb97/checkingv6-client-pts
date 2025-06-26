@@ -22,7 +22,7 @@ async function deleteDesignFiles() {
         for (const file of files) {
             const filePath = path.join(designPath, file);
             fs.unlinkSync(filePath);
-            console.log(`Đã xóa file: ${file}`);
+            
         }
 
         console.log('Đã xóa tất cả files trong thư mục design');

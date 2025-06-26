@@ -34,8 +34,8 @@ async function verifyDownloadedFiles(json, pathFolder) {
         }
 
         // In báo cáo
-        console.log('\nVerification Summary:');
-        console.log(`All files downloaded: ${isComplete ? 'Yes' : 'No'}`);
+        
+        console.log(`All files downloaded...........: ${isComplete ? 'Yes' : 'No'}`);
 
         return isComplete;
     } catch (error) {
@@ -97,10 +97,7 @@ async function readJsonAndDownloadImages(GLLM, json, pathFolder) {
     }
 
     // Log summary
-    console.log('\nProcessing Summary:');
-    console.log(`Total items: ${items.length}`);
-    console.log(`Successful: ${results.success.length}`);
-    console.log(`Failed: ${results.failed.length}`);
+
 
     if (results.failed.length > 0) {
         console.log('\nFailed items:');

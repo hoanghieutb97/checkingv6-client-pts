@@ -19,7 +19,7 @@ initPhotoshopStatus();
 
 // Define design path
 const designPath = path.join(SERVER_FILE_PATH, 'design');
-console.log('ServerFile path:', SERVER_FILE_PATH);  // Log để xem đường dẫn chính xác
+
 
 // Function theo dõi file txt và emit cardDone độc lập
 function startPhotoshopStatusWatcher(socket) {
@@ -33,8 +33,8 @@ function startPhotoshopStatusWatcher(socket) {
     let lastProcessedContent = null; // Tránh xử lý trùng lặp
 
     watcher.on('change', (path) => {
-        console.log(`File ${path} đã thay đổi!`);
         
+
         // Đọc nội dung của file khi nó thay đổi
         fs.readFile(path, 'utf8', (err, data) => {
             if (err) {
@@ -44,20 +44,20 @@ function startPhotoshopStatusWatcher(socket) {
 
             // Tránh xử lý nội dung trùng lặp
             // if (lastProcessedContent === data) {
-            //     console.log("Nội dung không thay đổi, bỏ qua");
+            
             //     return;
             // }
             lastProcessedContent = data;
 
-            console.log('Nội dung của file:', data);
+            
             try {
-                const { state, err, cardId } = JSON.parse(data);
-                console.log("status", { state, err, cardId }, new Date());
+                const { state, err, cardId, fileName } = JSON.parse(data);
                 
+
                 // Kiểm tra các trạng thái khác nhau
                 if ((state === 'done') && cardId && (err === false)) { // done true false
                     console.log("cardDone.........", cardId);
-                    socket.emit('cardDone', cardId);
+                    socket.emit('cardDone', { cardId, fileName });
                 }
                 else if ((state === 'awaitReady') && (cardId === false) && (err === false)) { // awaitReady false false
                     console.log("awaitReady.........");
@@ -111,7 +111,7 @@ let watcherCleanup = null;
 // Connection events
 socket.on('connect', () => {
     reconnectAttempts = 0;  // Reset số lần thử kết nối khi kết nối thành công
-    console.log('Connected to server',socket.id);
+    console.log('Connected to server', socket.id);
 
     // Báo cho server biết client đã sẵn sàng
     socket.emit('awaitReady');
@@ -154,10 +154,10 @@ socket.on('disconnect', () => {
 // Handle new card from server
 socket.on('newCard', async (card) => {
 
-    console.log('Received new card:', card.cardId);
+    console.log('Received new card:', card.fileName);
 
     // Xử lý card ở đây
-    console.log('Processing card...');
+    
 
     try {
         // Fetch GLLM data với retry

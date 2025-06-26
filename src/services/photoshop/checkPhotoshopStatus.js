@@ -22,12 +22,12 @@ async function checkPhotoshopStatus() {
 function waitForPhotoshopReady() {
     return new Promise((resolve, reject) => {
         const statusPath = path.join(SERVER_FILE_PATH, 'photoshopStatus.txt');
-        console.log('Waiting for Photoshop status change...');
+        
 
         // Kiểm tra trạng thái ban đầu
         checkPhotoshopStatus().then(isReady => {
             if (isReady) {
-                console.log('Photoshop is already ready!');
+                
                 resolve({ isReady: true, cardId: null });
                 return;
             }
