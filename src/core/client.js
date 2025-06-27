@@ -33,7 +33,7 @@ function startPhotoshopStatusWatcher(socket) {
     let lastProcessedContent = null; // Tránh xử lý trùng lặp
 
     watcher.on('change', (path) => {
-        
+
 
         // Đọc nội dung của file khi nó thay đổi
         fs.readFile(path, 'utf8', (err, data) => {
@@ -44,15 +44,15 @@ function startPhotoshopStatusWatcher(socket) {
 
             // Tránh xử lý nội dung trùng lặp
             // if (lastProcessedContent === data) {
-            
+
             //     return;
             // }
             lastProcessedContent = data;
 
-            
+
             try {
                 const { state, err, cardId, fileName } = JSON.parse(data);
-                
+
 
                 // Kiểm tra các trạng thái khác nhau
                 if ((state === 'done') && cardId && (err === false)) { // done true false
@@ -157,7 +157,7 @@ socket.on('newCard', async (card) => {
     console.log('Received new card:', card.fileName);
 
     // Xử lý card ở đây
-    
+
 
     try {
         // Fetch GLLM data với retry
@@ -184,6 +184,8 @@ socket.on('newCard', async (card) => {
 
             }
         } else {
+            socket.emit('cardError', card.cardId);
+            await check_AwaitPhotoshop();
             console.log('Some files are missing, skipping PTS script');
         }
 
