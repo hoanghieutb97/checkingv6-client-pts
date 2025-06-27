@@ -96,7 +96,7 @@ function startPhotoshopStatusWatcher(socket) {
 }
 
 // Initialize socket connection
-const socket = io("http://192.168.1.220:3999", {
+const socket = io("http://192.168.1.240:3999", {
     transports: ['websocket'],
     reconnection: true,
     reconnectionAttempts: Infinity,  // Thử kết nối lại vô hạn
